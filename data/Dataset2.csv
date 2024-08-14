@@ -1,0 +1,443 @@
+"speciesgroup","prodmeth","form","stage","step","loss_multiplier","loss_rate"
+"Shrimp","farmed","fresh","home","cooling",1.03965691483068,0.0381442322606386
+"Shrimp","farmed","fresh","home","indirect",1.03965691483068,0.0381442322606386
+"Shrimp","farmed","fresh","home","cooking",1.03965691483068,0.0381442322606386
+"Shrimp","farmed","fresh","home","direct",1.03965691483068,0.0381442322606386
+"Shrimp","farmed","fresh","retail.foodservice","cooling",1.17100011834163,0.112163270911496
+"Shrimp","farmed","fresh","retail.foodservice","indirect.cool",1.17100011834163,0.112163270911496
+"Shrimp","farmed","fresh","retail.foodservice","cooking",1.17100011834163,0.112163270911496
+"Shrimp","farmed","fresh","retail.foodservice","indirect.cook",1.17100011834163,0.112163270911496
+"Shrimp","farmed","fresh","transport","domestic",1.17100011834163,0
+"Shrimp","farmed","fresh","wholesale","cooling",1.18555372864757,0.0122757914333826
+"Shrimp","farmed","fresh","wholesale","direct",1.18555372864757,0.0122757914333826
+"Shrimp","farmed","fresh","transport","intnl",1.18555372864757,0
+"Shrimp","farmed","fresh","processing","direct",1.2107272709593,0.0207920833333333
+"Shrimp","farmed","fresh","processing","indirect",1.2107272709593,0.0207920833333333
+"Shrimp","farmed","fresh","production","feed",1.3402325632063,0.0966289700775381
+"Shrimp","farmed","fresh","production","direct",1.3402325632063,0.0966289700775381
+"Shrimp","farmed","fresh","production","indirect",1.3402325632063,0.0966289700775381
+"Shrimp","farmed","frozen","home","cooling",1.03965691483068,0.0381442322606386
+"Shrimp","farmed","frozen","home","indirect",1.03965691483068,0.0381442322606386
+"Shrimp","farmed","frozen","home","cooking",1.03965691483068,0.0381442322606386
+"Shrimp","farmed","frozen","home","direct",1.03965691483068,0.0381442322606386
+"Shrimp","farmed","frozen","retail.foodservice","cooling",1.13656294586533,0.0852623529450647
+"Shrimp","farmed","frozen","retail.foodservice","indirect.cool",1.13656294586533,0.0852623529450647
+"Shrimp","farmed","frozen","retail.foodservice","cooking",1.13656294586533,0.0852623529450647
+"Shrimp","farmed","frozen","retail.foodservice","indirect.cook",1.13656294586533,0.0852623529450647
+"Shrimp","farmed","frozen","transport","domestic",1.13656294586533,0
+"Shrimp","farmed","frozen","wholesale","cooling",1.15068855861568,0.0122757914333826
+"Shrimp","farmed","frozen","wholesale","direct",1.15068855861568,0.0122757914333826
+"Shrimp","farmed","frozen","transport","intnl",1.15068855861568,0
+"Shrimp","farmed","frozen","processing","direct",1.1751217887747,0.0207920833333333
+"Shrimp","farmed","frozen","processing","indirect",1.1751217887747,0.0207920833333333
+"Shrimp","farmed","frozen","production","feed",1.30081854503964,0.096628970077538
+"Shrimp","farmed","frozen","production","direct",1.30081854503964,0.096628970077538
+"Shrimp","farmed","frozen","production","indirect",1.30081854503964,0.096628970077538
+"Shrimp","wild caught","fresh","home","cooling",1.03965691483068,0.0381442322606386
+"Shrimp","wild caught","fresh","home","indirect",1.03965691483068,0.0381442322606386
+"Shrimp","wild caught","fresh","home","cooking",1.03965691483068,0.0381442322606386
+"Shrimp","wild caught","fresh","home","direct",1.03965691483068,0.0381442322606386
+"Shrimp","wild caught","fresh","retail.foodservice","cooling",1.17100011834163,0.112163270911496
+"Shrimp","wild caught","fresh","retail.foodservice","indirect.cool",1.17100011834163,0.112163270911496
+"Shrimp","wild caught","fresh","retail.foodservice","cooking",1.17100011834163,0.112163270911496
+"Shrimp","wild caught","fresh","retail.foodservice","indirect.cook",1.17100011834163,0.112163270911496
+"Shrimp","wild caught","fresh","transport","domestic",1.17100011834163,0
+"Shrimp","wild caught","fresh","wholesale","cooling",1.18555372864757,0.0122757914333826
+"Shrimp","wild caught","fresh","wholesale","direct",1.18555372864757,0.0122757914333826
+"Shrimp","wild caught","fresh","transport","intnl",1.18555372864757,0
+"Shrimp","wild caught","fresh","processing","direct",1.2326405995504,0.0382
+"Shrimp","wild caught","fresh","processing","indirect",1.2326405995504,0.0382
+"Shrimp","wild caught","fresh","production","feed",1.50058506957343,0.17856
+"Shrimp","wild caught","fresh","production","direct",1.50058506957343,0.17856
+"Shrimp","wild caught","fresh","production","indirect",1.50058506957343,0.17856
+"Shrimp","wild caught","frozen","home","cooling",1.03965691483068,0.0381442322606386
+"Shrimp","wild caught","frozen","home","indirect",1.03965691483068,0.0381442322606386
+"Shrimp","wild caught","frozen","home","cooking",1.03965691483068,0.0381442322606386
+"Shrimp","wild caught","frozen","home","direct",1.03965691483068,0.0381442322606386
+"Shrimp","wild caught","frozen","retail.foodservice","cooling",1.13656294586533,0.0852623529450647
+"Shrimp","wild caught","frozen","retail.foodservice","indirect.cool",1.13656294586533,0.0852623529450647
+"Shrimp","wild caught","frozen","retail.foodservice","cooking",1.13656294586533,0.0852623529450647
+"Shrimp","wild caught","frozen","retail.foodservice","indirect.cook",1.13656294586533,0.0852623529450647
+"Shrimp","wild caught","frozen","transport","domestic",1.13656294586533,0
+"Shrimp","wild caught","frozen","wholesale","cooling",1.15068855861568,0.0122757914333826
+"Shrimp","wild caught","frozen","wholesale","direct",1.15068855861568,0.0122757914333826
+"Shrimp","wild caught","frozen","transport","intnl",1.15068855861568,0
+"Shrimp","wild caught","frozen","processing","direct",1.19639068269461,0.0382
+"Shrimp","wild caught","frozen","processing","indirect",1.19639068269461,0.0382
+"Shrimp","wild caught","frozen","production","feed",1.45645534998857,0.17856
+"Shrimp","wild caught","frozen","production","direct",1.45645534998857,0.17856
+"Shrimp","wild caught","frozen","production","indirect",1.45645534998857,0.17856
+"Atlantic salmon","farmed","fresh","home","cooling",1.06359082101986,0.0597888020121158
+"Atlantic salmon","farmed","fresh","home","indirect",1.06359082101986,0.0597888020121158
+"Atlantic salmon","farmed","fresh","home","cooking",1.06359082101986,0.0597888020121158
+"Atlantic salmon","farmed","fresh","home","direct",1.06359082101986,0.0597888020121158
+"Atlantic salmon","farmed","fresh","retail.foodservice","cooling",1.16096336406305,0.0838721927472448
+"Atlantic salmon","farmed","fresh","retail.foodservice","indirect.cool",1.16096336406305,0.0838721927472448
+"Atlantic salmon","farmed","fresh","retail.foodservice","cooking",1.16096336406305,0.0838721927472448
+"Atlantic salmon","farmed","fresh","retail.foodservice","indirect.cook",1.16096336406305,0.0838721927472448
+"Atlantic salmon","farmed","fresh","transport","domestic",1.16096336406305,0
+"Atlantic salmon","farmed","fresh","wholesale","cooling",1.1753922339798,0.0122757914333826
+"Atlantic salmon","farmed","fresh","wholesale","direct",1.1753922339798,0.0122757914333826
+"Atlantic salmon","farmed","fresh","transport","intnl",1.1753922339798,0
+"Atlantic salmon","farmed","fresh","processing","direct",1.18324119867356,0.00663344439203354
+"Atlantic salmon","farmed","fresh","processing","indirect",1.18324119867356,0.00663344439203354
+"Atlantic salmon","farmed","fresh","production","feed",1.27290232796122,0.070438341825698
+"Atlantic salmon","farmed","fresh","production","direct",1.27290232796122,0.070438341825698
+"Atlantic salmon","farmed","fresh","production","indirect",1.27290232796122,0.070438341825698
+"Atlantic salmon","farmed","frozen","home","cooling",1.06359082101986,0.0597888020121158
+"Atlantic salmon","farmed","frozen","home","indirect",1.06359082101986,0.0597888020121158
+"Atlantic salmon","farmed","frozen","home","cooking",1.06359082101986,0.0597888020121158
+"Atlantic salmon","farmed","frozen","home","direct",1.06359082101986,0.0597888020121158
+"Atlantic salmon","farmed","frozen","retail.foodservice","cooling",1.10988016374887,0.0417066132371068
+"Atlantic salmon","farmed","frozen","retail.foodservice","indirect.cool",1.10988016374887,0.0417066132371068
+"Atlantic salmon","farmed","frozen","retail.foodservice","cooking",1.10988016374887,0.0417066132371068
+"Atlantic salmon","farmed","frozen","retail.foodservice","indirect.cook",1.10988016374887,0.0417066132371068
+"Atlantic salmon","farmed","frozen","transport","domestic",1.10988016374887,0
+"Atlantic salmon","farmed","frozen","wholesale","cooling",1.12367415329379,0.0122757914333826
+"Atlantic salmon","farmed","frozen","wholesale","direct",1.12367415329379,0.0122757914333826
+"Atlantic salmon","farmed","frozen","transport","intnl",1.12367415329379,0
+"Atlantic salmon","farmed","frozen","processing","direct",1.13117775804931,0.00663344439203354
+"Atlantic salmon","farmed","frozen","processing","indirect",1.13117775804931,0.00663344439203354
+"Atlantic salmon","farmed","frozen","production","feed",1.21689373491479,0.070438341825698
+"Atlantic salmon","farmed","frozen","production","direct",1.21689373491479,0.070438341825698
+"Atlantic salmon","farmed","frozen","production","indirect",1.21689373491479,0.070438341825698
+"Sockeye salmon","wild caught","fresh","home","cooling",1.06359082101986,0.0597888020121158
+"Sockeye salmon","wild caught","fresh","home","indirect",1.06359082101986,0.0597888020121158
+"Sockeye salmon","wild caught","fresh","home","cooking",1.06359082101986,0.0597888020121158
+"Sockeye salmon","wild caught","fresh","home","direct",1.06359082101986,0.0597888020121158
+"Sockeye salmon","wild caught","fresh","retail.foodservice","cooling",1.16096336406305,0.0838721927472448
+"Sockeye salmon","wild caught","fresh","retail.foodservice","indirect.cool",1.16096336406305,0.0838721927472448
+"Sockeye salmon","wild caught","fresh","retail.foodservice","cooking",1.16096336406305,0.0838721927472448
+"Sockeye salmon","wild caught","fresh","retail.foodservice","indirect.cook",1.16096336406305,0.0838721927472448
+"Sockeye salmon","wild caught","fresh","transport","domestic",1.16096336406305,0
+"Sockeye salmon","wild caught","fresh","wholesale","cooling",1.1753922339798,0.0122757914333826
+"Sockeye salmon","wild caught","fresh","wholesale","direct",1.1753922339798,0.0122757914333826
+"Sockeye salmon","wild caught","fresh","transport","intnl",1.1753922339798,0
+"Sockeye salmon","wild caught","fresh","processing","direct",1.17948703153452,0.00347167662318107
+"Sockeye salmon","wild caught","fresh","processing","indirect",1.17948703153452,0.00347167662318107
+"Sockeye salmon","wild caught","fresh","production","feed",1.17948703153452,0
+"Sockeye salmon","wild caught","fresh","production","direct",1.17948703153452,0
+"Sockeye salmon","wild caught","fresh","production","indirect",1.17948703153452,0
+"Sockeye salmon","wild caught","frozen","home","cooling",1.06359082101986,0.0597888020121158
+"Sockeye salmon","wild caught","frozen","home","indirect",1.06359082101986,0.0597888020121158
+"Sockeye salmon","wild caught","frozen","home","cooking",1.06359082101986,0.0597888020121158
+"Sockeye salmon","wild caught","frozen","home","direct",1.06359082101986,0.0597888020121158
+"Sockeye salmon","wild caught","frozen","retail.foodservice","cooling",1.10988016374887,0.0417066132371068
+"Sockeye salmon","wild caught","frozen","retail.foodservice","indirect.cool",1.10988016374887,0.0417066132371068
+"Sockeye salmon","wild caught","frozen","retail.foodservice","cooking",1.10988016374887,0.0417066132371068
+"Sockeye salmon","wild caught","frozen","retail.foodservice","indirect.cook",1.10988016374887,0.0417066132371068
+"Sockeye salmon","wild caught","frozen","transport","domestic",1.10988016374887,0
+"Sockeye salmon","wild caught","frozen","wholesale","cooling",1.12367415329379,0.0122757914333826
+"Sockeye salmon","wild caught","frozen","wholesale","direct",1.12367415329379,0.0122757914333826
+"Sockeye salmon","wild caught","frozen","transport","intnl",1.12367415329379,0
+"Sockeye salmon","wild caught","frozen","processing","direct",1.12758877689108,0.00347167662318107
+"Sockeye salmon","wild caught","frozen","processing","indirect",1.12758877689108,0.00347167662318107
+"Sockeye salmon","wild caught","frozen","production","feed",1.12758877689108,0
+"Sockeye salmon","wild caught","frozen","production","direct",1.12758877689108,0
+"Sockeye salmon","wild caught","frozen","production","indirect",1.12758877689108,0
+"Sockeye salmon","wild caught","canned","home","cooling",1.06359082101986,0.0597888020121158
+"Sockeye salmon","wild caught","canned","home","indirect",1.06359082101986,0.0597888020121158
+"Sockeye salmon","wild caught","canned","home","cooking",1.06359082101986,0.0597888020121158
+"Sockeye salmon","wild caught","canned","home","direct",1.06359082101986,0.0597888020121158
+"Sockeye salmon","wild caught","canned","retail.foodservice","cooling",1.11232732277227,0.0438148922126137
+"Sockeye salmon","wild caught","canned","retail.foodservice","indirect.cool",1.11232732277227,0.0438148922126137
+"Sockeye salmon","wild caught","canned","retail.foodservice","cooking",1.11232732277227,0.0438148922126137
+"Sockeye salmon","wild caught","canned","retail.foodservice","indirect.cook",1.11232732277227,0.0438148922126137
+"Sockeye salmon","wild caught","canned","transport","domestic",1.11232732277227,0
+"Sockeye salmon","wild caught","canned","wholesale","cooling",1.12615172648899,0.0122757914333826
+"Sockeye salmon","wild caught","canned","wholesale","direct",1.12615172648899,0.0122757914333826
+"Sockeye salmon","wild caught","canned","transport","intnl",1.12615172648899,0
+"Sockeye salmon","wild caught","canned","processing","direct",1.13007498138431,0.00347167662318107
+"Sockeye salmon","wild caught","canned","processing","indirect",1.13007498138431,0.00347167662318107
+"Sockeye salmon","wild caught","canned","production","feed",1.13007498138431,0
+"Sockeye salmon","wild caught","canned","production","direct",1.13007498138431,0
+"Sockeye salmon","wild caught","canned","production","indirect",1.13007498138431,0
+"Tuna","wild caught","fresh","home","cooling",1.07431821353495,0.0691770953881617
+"Tuna","wild caught","fresh","home","indirect",1.07431821353495,0.0691770953881617
+"Tuna","wild caught","fresh","home","cooking",1.07431821353495,0.0691770953881617
+"Tuna","wild caught","fresh","home","direct",1.07431821353495,0.0691770953881617
+"Tuna","wild caught","fresh","retail.foodservice","cooling",1.16214523856007,0.0755731918102949
+"Tuna","wild caught","fresh","retail.foodservice","indirect.cool",1.16214523856007,0.0755731918102949
+"Tuna","wild caught","fresh","retail.foodservice","cooking",1.16214523856007,0.0755731918102949
+"Tuna","wild caught","fresh","retail.foodservice","indirect.cook",1.16214523856007,0.0755731918102949
+"Tuna","wild caught","fresh","transport","domestic",1.16214523856007,0
+"Tuna","wild caught","fresh","wholesale","cooling",1.17658879723781,0.0122757914333826
+"Tuna","wild caught","fresh","wholesale","direct",1.17658879723781,0.0122757914333826
+"Tuna","wild caught","fresh","transport","intnl",1.17658879723781,0
+"Tuna","wild caught","fresh","processing","direct",1.17741788383897,0.000704156623181074
+"Tuna","wild caught","fresh","processing","indirect",1.17741788383897,0.000704156623181074
+"Tuna","wild caught","fresh","production","feed",1.22516246510408,0.03897
+"Tuna","wild caught","fresh","production","direct",1.22516246510408,0.03897
+"Tuna","wild caught","fresh","production","indirect",1.22516246510408,0.03897
+"Tuna","wild caught","frozen","home","cooling",1.07431821353495,0.0691770953881617
+"Tuna","wild caught","frozen","home","indirect",1.07431821353495,0.0691770953881617
+"Tuna","wild caught","frozen","home","cooking",1.07431821353495,0.0691770953881617
+"Tuna","wild caught","frozen","home","direct",1.07431821353495,0.0691770953881617
+"Tuna","wild caught","frozen","retail.foodservice","cooling",1.10388760107642,0.0267865926862844
+"Tuna","wild caught","frozen","retail.foodservice","indirect.cool",1.10388760107642,0.0267865926862844
+"Tuna","wild caught","frozen","retail.foodservice","cooking",1.10388760107642,0.0267865926862844
+"Tuna","wild caught","frozen","retail.foodservice","indirect.cook",1.10388760107642,0.0267865926862844
+"Tuna","wild caught","frozen","transport","domestic",1.10388760107642,0
+"Tuna","wild caught","frozen","wholesale","cooling",1.11760711289883,0.0122757914333826
+"Tuna","wild caught","frozen","wholesale","direct",1.11760711289883,0.0122757914333826
+"Tuna","wild caught","frozen","transport","intnl",1.11760711289883,0
+"Tuna","wild caught","frozen","processing","direct",1.11839463789043,0.000704156623181074
+"Tuna","wild caught","frozen","processing","indirect",1.11839463789043,0.000704156623181074
+"Tuna","wild caught","frozen","production","feed",1.16374581219154,0.03897
+"Tuna","wild caught","frozen","production","direct",1.16374581219154,0.03897
+"Tuna","wild caught","frozen","production","indirect",1.16374581219154,0.03897
+"Tuna","wild caught","canned","home","cooling",1.07431821353495,0.0691770953881617
+"Tuna","wild caught","canned","home","indirect",1.07431821353495,0.0691770953881617
+"Tuna","wild caught","canned","home","cooking",1.07431821353495,0.0691770953881617
+"Tuna","wild caught","canned","home","direct",1.07431821353495,0.0691770953881617
+"Tuna","wild caught","canned","retail.foodservice","cooling",1.10666141442433,0.0292259226424849
+"Tuna","wild caught","canned","retail.foodservice","indirect.cool",1.10666141442433,0.0292259226424849
+"Tuna","wild caught","canned","retail.foodservice","cooking",1.10666141442433,0.0292259226424849
+"Tuna","wild caught","canned","retail.foodservice","indirect.cook",1.10666141442433,0.0292259226424849
+"Tuna","wild caught","canned","transport","domestic",1.10666141442433,0
+"Tuna","wild caught","canned","wholesale","cooling",1.12041540019589,0.0122757914333826
+"Tuna","wild caught","canned","wholesale","direct",1.12041540019589,0.0122757914333826
+"Tuna","wild caught","canned","transport","intnl",1.12041540019589,0
+"Tuna","wild caught","canned","processing","direct",1.12120490405502,0.000704156623181074
+"Tuna","wild caught","canned","processing","indirect",1.12120490405502,0.000704156623181074
+"Tuna","wild caught","canned","production","feed",1.16667003533191,0.03897
+"Tuna","wild caught","canned","production","direct",1.16667003533191,0.03897
+"Tuna","wild caught","canned","production","indirect",1.16667003533191,0.03897
+"Tilapia","farmed","frozen","home","cooling",1.07667904115101,0.0712181051365519
+"Tilapia","farmed","frozen","home","indirect",1.07667904115101,0.0712181051365519
+"Tilapia","farmed","frozen","home","cooking",1.07667904115101,0.0712181051365519
+"Tilapia","farmed","frozen","home","direct",1.07667904115101,0.0712181051365519
+"Tilapia","farmed","frozen","retail.foodservice","cooling",1.10299770579434,0.0238610329877052
+"Tilapia","farmed","frozen","retail.foodservice","indirect.cool",1.10299770579434,0.0238610329877052
+"Tilapia","farmed","frozen","retail.foodservice","cooking",1.10299770579434,0.0238610329877052
+"Tilapia","farmed","frozen","retail.foodservice","indirect.cook",1.10299770579434,0.0238610329877052
+"Tilapia","farmed","frozen","transport","domestic",1.10299770579434,0
+"Tilapia","farmed","frozen","wholesale","cooling",1.11670615767837,0.0122757914333826
+"Tilapia","farmed","frozen","wholesale","direct",1.11670615767837,0.0122757914333826
+"Tilapia","farmed","frozen","transport","intnl",1.11670615767837,0
+"Tilapia","farmed","frozen","processing","direct",1.16936745148871,0.045034
+"Tilapia","farmed","frozen","processing","indirect",1.16936745148871,0.045034
+"Tilapia","farmed","frozen","production","feed",1.23611781341302,0.054
+"Tilapia","farmed","frozen","production","direct",1.23611781341302,0.054
+"Tilapia","farmed","frozen","production","indirect",1.23611781341302,0.054
+"Catfish","farmed","fresh","home","cooling",1.04304167052346,0.0412655330461142
+"Catfish","farmed","fresh","home","indirect",1.04304167052346,0.0412655330461142
+"Catfish","farmed","fresh","home","cooking",1.04304167052346,0.0412655330461142
+"Catfish","farmed","fresh","home","direct",1.04304167052346,0.0412655330461142
+"Catfish","farmed","fresh","retail.foodservice","cooling",1.16840606063925,0.107295224099744
+"Catfish","farmed","fresh","retail.foodservice","indirect.cool",1.16840606063925,0.107295224099744
+"Catfish","farmed","fresh","retail.foodservice","cooking",1.16840606063925,0.107295224099744
+"Catfish","farmed","fresh","retail.foodservice","indirect.cook",1.16840606063925,0.107295224099744
+"Catfish","farmed","fresh","transport","domestic",1.16840606063925,0
+"Catfish","farmed","fresh","wholesale","cooling",1.18292743106381,0.0122757914333826
+"Catfish","farmed","fresh","wholesale","direct",1.18292743106381,0.0122757914333826
+"Catfish","farmed","fresh","transport","intnl",1.18292743106381,0
+"Catfish","farmed","fresh","processing","direct",1.18469852494482,0.00149497432782953
+"Catfish","farmed","fresh","processing","indirect",1.18469852494482,0.00149497432782953
+"Catfish","farmed","fresh","production","feed",1.29249239029546,0.0834
+"Catfish","farmed","fresh","production","direct",1.29249239029546,0.0834
+"Catfish","farmed","fresh","production","indirect",1.29249239029546,0.0834
+"Catfish","farmed","frozen","home","cooling",1.04304167052346,0.0412655330461142
+"Catfish","farmed","frozen","home","indirect",1.04304167052346,0.0412655330461142
+"Catfish","farmed","frozen","home","cooking",1.04304167052346,0.0412655330461142
+"Catfish","farmed","frozen","home","direct",1.04304167052346,0.0412655330461142
+"Catfish","farmed","frozen","retail.foodservice","cooling",1.13151853736888,0.078193033453215
+"Catfish","farmed","frozen","retail.foodservice","indirect.cool",1.13151853736888,0.078193033453215
+"Catfish","farmed","frozen","retail.foodservice","cooking",1.13151853736888,0.078193033453215
+"Catfish","farmed","frozen","retail.foodservice","indirect.cook",1.13151853736888,0.078193033453215
+"Catfish","farmed","frozen","transport","domestic",1.13151853736888,0
+"Catfish","farmed","frozen","wholesale","cooling",1.14558145639756,0.0122757914333826
+"Catfish","farmed","frozen","wholesale","direct",1.14558145639756,0.0122757914333826
+"Catfish","farmed","frozen","transport","intnl",1.14558145639756,0
+"Catfish","farmed","frozen","processing","direct",1.14729663541391,0.00149497432782953
+"Catfish","farmed","frozen","processing","indirect",1.14729663541391,0.00149497432782953
+"Catfish","farmed","frozen","production","feed",1.25168736135055,0.0834
+"Catfish","farmed","frozen","production","direct",1.25168736135055,0.0834
+"Catfish","farmed","frozen","production","indirect",1.25168736135055,0.0834
+"Pollock","wild caught","frozen","home","cooling",1.04454845945448,0.0426485330108508
+"Pollock","wild caught","frozen","home","indirect",1.04454845945448,0.0426485330108508
+"Pollock","wild caught","frozen","home","cooking",1.04454845945448,0.0426485330108508
+"Pollock","wild caught","frozen","home","direct",1.04454845945448,0.0426485330108508
+"Pollock","wild caught","frozen","retail.foodservice","cooling",1.12941942761231,0.0751456598699149
+"Pollock","wild caught","frozen","retail.foodservice","indirect.cool",1.12941942761231,0.0751456598699149
+"Pollock","wild caught","frozen","retail.foodservice","cooking",1.12941942761231,0.0751456598699149
+"Pollock","wild caught","frozen","retail.foodservice","indirect.cook",1.12941942761231,0.0751456598699149
+"Pollock","wild caught","frozen","transport","domestic",1.12941942761231,0
+"Pollock","wild caught","frozen","wholesale","cooling",1.14345625815056,0.0122757914333826
+"Pollock","wild caught","frozen","wholesale","direct",1.14345625815056,0.0122757914333826
+"Pollock","wild caught","frozen","transport","intnl",1.14345625815056,0
+"Pollock","wild caught","frozen","processing","direct",1.17805131255591,0.0293663391709982
+"Pollock","wild caught","frozen","processing","indirect",1.17805131255591,0.0293663391709982
+"Pollock","wild caught","frozen","production","feed",1.18131104067714,0.00275941560603798
+"Pollock","wild caught","frozen","production","direct",1.18131104067714,0.00275941560603798
+"Pollock","wild caught","frozen","production","indirect",1.18131104067714,0.00275941560603798
+"Cod","wild caught","frozen","home","cooling",1.03953918484243,0.0380353000819533
+"Cod","wild caught","frozen","home","indirect",1.03953918484243,0.0380353000819533
+"Cod","wild caught","frozen","home","cooking",1.03953918484243,0.0380353000819533
+"Cod","wild caught","frozen","home","direct",1.03953918484243,0.0380353000819533
+"Cod","wild caught","frozen","retail.foodservice","cooling",1.13674679935703,0.08551386691353
+"Cod","wild caught","frozen","retail.foodservice","indirect.cool",1.13674679935703,0.08551386691353
+"Cod","wild caught","frozen","retail.foodservice","cooking",1.13674679935703,0.08551386691353
+"Cod","wild caught","frozen","retail.foodservice","indirect.cook",1.13674679935703,0.08551386691353
+"Cod","wild caught","frozen","transport","domestic",1.13674679935703,0
+"Cod","wild caught","frozen","wholesale","cooling",1.15087469710464,0.0122757914333826
+"Cod","wild caught","frozen","wholesale","direct",1.15087469710464,0.0122757914333826
+"Cod","wild caught","frozen","transport","intnl",1.15087469710464,0
+"Cod","wild caught","frozen","processing","direct",1.18569419498774,0.0293663391709982
+"Cod","wild caught","frozen","processing","indirect",1.18569419498774,0.0293663391709982
+"Cod","wild caught","frozen","production","feed",1.26663197840801,0.0639
+"Cod","wild caught","frozen","production","direct",1.26663197840801,0.0639
+"Cod","wild caught","frozen","production","indirect",1.26663197840801,0.0639
+"Crab","wild caught","fresh","home","cooling",1.03061025692606,0.0297010986649405
+"Crab","wild caught","fresh","home","indirect",1.03061025692606,0.0297010986649405
+"Crab","wild caught","fresh","home","cooking",1.03061025692606,0.0297010986649405
+"Crab","wild caught","fresh","home","direct",1.03061025692606,0.0297010986649405
+"Crab","wild caught","fresh","retail.foodservice","cooling",1.18008256464224,0.126662584631524
+"Crab","wild caught","fresh","retail.foodservice","indirect.cool",1.18008256464224,0.126662584631524
+"Crab","wild caught","fresh","retail.foodservice","cooking",1.18008256464224,0.126662584631524
+"Crab","wild caught","fresh","retail.foodservice","indirect.cook",1.18008256464224,0.126662584631524
+"Crab","wild caught","fresh","transport","domestic",1.18008256464224,0
+"Crab","wild caught","fresh","wholesale","cooling",1.19474905485487,0.0122757914333826
+"Crab","wild caught","fresh","wholesale","direct",1.19474905485487,0.0122757914333826
+"Crab","wild caught","fresh","transport","intnl",1.19474905485487,0
+"Crab","wild caught","fresh","processing","direct",1.32749894983875,0.1
+"Crab","wild caught","fresh","processing","indirect",1.32749894983875,0.1
+"Crab","wild caught","fresh","production","feed",1.42221871634749,0.0666
+"Crab","wild caught","fresh","production","direct",1.42221871634749,0.0666
+"Crab","wild caught","fresh","production","indirect",1.42221871634749,0.0666
+"Crab","wild caught","frozen","home","cooling",1.03061025692606,0.0297010986649405
+"Crab","wild caught","frozen","home","indirect",1.03061025692606,0.0297010986649405
+"Crab","wild caught","frozen","home","cooking",1.03061025692606,0.0297010986649405
+"Crab","wild caught","frozen","home","direct",1.03061025692606,0.0297010986649405
+"Crab","wild caught","frozen","retail.foodservice","cooling",1.15244194798859,0.105716119822926
+"Crab","wild caught","frozen","retail.foodservice","indirect.cool",1.15244194798859,0.105716119822926
+"Crab","wild caught","frozen","retail.foodservice","cooking",1.15244194798859,0.105716119822926
+"Crab","wild caught","frozen","retail.foodservice","indirect.cook",1.15244194798859,0.105716119822926
+"Crab","wild caught","frozen","transport","domestic",1.15244194798859,0
+"Crab","wild caught","frozen","wholesale","cooling",1.16676491068393,0.0122757914333826
+"Crab","wild caught","frozen","wholesale","direct",1.16676491068393,0.0122757914333826
+"Crab","wild caught","frozen","transport","intnl",1.16676491068393,0
+"Crab","wild caught","frozen","processing","direct",1.29640545631548,0.1
+"Crab","wild caught","frozen","processing","indirect",1.29640545631548,0.1
+"Crab","wild caught","frozen","production","feed",1.38890663843527,0.0666
+"Crab","wild caught","frozen","production","direct",1.38890663843527,0.0666
+"Crab","wild caught","frozen","production","indirect",1.38890663843527,0.0666
+"Crab","wild caught","canned","home","cooling",1.03061025692606,0.0297010986649405
+"Crab","wild caught","canned","home","indirect",1.03061025692606,0.0297010986649405
+"Crab","wild caught","canned","home","cooking",1.03061025692606,0.0297010986649405
+"Crab","wild caught","canned","home","direct",1.03061025692606,0.0297010986649405
+"Crab","wild caught","canned","retail.foodservice","cooling",1.15379319053011,0.106763443063356
+"Crab","wild caught","canned","retail.foodservice","indirect.cool",1.15379319053011,0.106763443063356
+"Crab","wild caught","canned","retail.foodservice","cooking",1.15379319053011,0.106763443063356
+"Crab","wild caught","canned","retail.foodservice","indirect.cook",1.15379319053011,0.106763443063356
+"Crab","wild caught","canned","transport","domestic",1.15379319053011,0
+"Crab","wild caught","canned","wholesale","cooling",1.16813294695337,0.0122757914333826
+"Crab","wild caught","canned","wholesale","direct",1.16813294695337,0.0122757914333826
+"Crab","wild caught","canned","transport","intnl",1.16813294695337,0
+"Crab","wild caught","canned","processing","direct",1.29792549661486,0.1
+"Crab","wild caught","canned","processing","indirect",1.29792549661486,0.1
+"Crab","wild caught","canned","production","feed",1.39053513672044,0.0666
+"Crab","wild caught","canned","production","direct",1.39053513672044,0.0666
+"Crab","wild caught","canned","production","indirect",1.39053513672044,0.0666
+"Flatfish","wild caught","fresh","home","cooling",1.04851640638786,0.046271480438731
+"Flatfish","wild caught","fresh","home","indirect",1.04851640638786,0.046271480438731
+"Flatfish","wild caught","fresh","home","cooking",1.04851640638786,0.046271480438731
+"Flatfish","wild caught","fresh","home","direct",1.04851640638786,0.046271480438731
+"Flatfish","wild caught","fresh","retail.foodservice","cooling",1.16507329284855,0.100042535672336
+"Flatfish","wild caught","fresh","retail.foodservice","indirect.cool",1.16507329284855,0.100042535672336
+"Flatfish","wild caught","fresh","retail.foodservice","cooking",1.16507329284855,0.100042535672336
+"Flatfish","wild caught","fresh","retail.foodservice","indirect.cook",1.16507329284855,0.100042535672336
+"Flatfish","wild caught","fresh","transport","domestic",1.16507329284855,0
+"Flatfish","wild caught","fresh","wholesale","cooling",1.17955324243728,0.0122757914333826
+"Flatfish","wild caught","fresh","wholesale","direct",1.17955324243728,0.0122757914333826
+"Flatfish","wild caught","fresh","transport","intnl",1.17955324243728,0
+"Flatfish","wild caught","fresh","processing","direct",1.18203551702303,0.0021
+"Flatfish","wild caught","fresh","processing","indirect",1.18203551702303,0.0021
+"Flatfish","wild caught","fresh","production","feed",1.24950900319559,0.054
+"Flatfish","wild caught","fresh","production","direct",1.24950900319559,0.054
+"Flatfish","wild caught","fresh","production","indirect",1.24950900319559,0.054
+"Flatfish","wild caught","frozen","home","cooling",1.04851640638786,0.046271480438731
+"Flatfish","wild caught","frozen","home","indirect",1.04851640638786,0.046271480438731
+"Flatfish","wild caught","frozen","home","cooking",1.04851640638786,0.046271480438731
+"Flatfish","wild caught","frozen","home","direct",1.04851640638786,0.046271480438731
+"Flatfish","wild caught","frozen","retail.foodservice","cooling",1.12430579268327,0.0674099402392361
+"Flatfish","wild caught","frozen","retail.foodservice","indirect.cool",1.12430579268327,0.0674099402392361
+"Flatfish","wild caught","frozen","retail.foodservice","cooking",1.12430579268327,0.0674099402392361
+"Flatfish","wild caught","frozen","retail.foodservice","indirect.cook",1.12430579268327,0.0674099402392361
+"Flatfish","wild caught","frozen","transport","domestic",1.12430579268327,0
+"Flatfish","wild caught","frozen","wholesale","cooling",1.13827906912888,0.0122757914333826
+"Flatfish","wild caught","frozen","wholesale","direct",1.13827906912888,0.0122757914333826
+"Flatfish","wild caught","frozen","transport","intnl",1.13827906912888,0
+"Flatfish","wild caught","frozen","processing","direct",1.14067448554853,0.0021
+"Flatfish","wild caught","frozen","processing","indirect",1.14067448554853,0.0021
+"Flatfish","wild caught","frozen","production","feed",1.20578698260944,0.054
+"Flatfish","wild caught","frozen","production","direct",1.20578698260944,0.054
+"Flatfish","wild caught","frozen","production","indirect",1.20578698260944,0.054
+"Scallops","wild caught","fresh","home","cooling",1.04855636417017,0.0463078245761213
+"Scallops","wild caught","fresh","home","indirect",1.04855636417017,0.0463078245761213
+"Scallops","wild caught","fresh","home","cooking",1.04855636417017,0.0463078245761213
+"Scallops","wild caught","fresh","home","direct",1.04855636417017,0.0463078245761213
+"Scallops","wild caught","fresh","retail.foodservice","cooling",1.16505276054013,0.0999923782987745
+"Scallops","wild caught","fresh","retail.foodservice","indirect.cool",1.16505276054013,0.0999923782987745
+"Scallops","wild caught","fresh","retail.foodservice","cooking",1.16505276054013,0.0999923782987745
+"Scallops","wild caught","fresh","retail.foodservice","indirect.cook",1.16505276054013,0.0999923782987745
+"Scallops","wild caught","fresh","transport","domestic",1.16505276054013,0
+"Scallops","wild caught","fresh","wholesale","cooling",1.17953245494595,0.0122757914333826
+"Scallops","wild caught","fresh","wholesale","direct",1.17953245494595,0.0122757914333826
+"Scallops","wild caught","fresh","transport","intnl",1.17953245494595,0
+"Scallops","wild caught","fresh","processing","direct",1.31497486616048,0.103
+"Scallops","wild caught","fresh","processing","indirect",1.31497486616048,0.103
+"Scallops","wild caught","fresh","production","feed",1.39003685640643,0.054
+"Scallops","wild caught","fresh","production","direct",1.39003685640643,0.054
+"Scallops","wild caught","fresh","production","indirect",1.39003685640643,0.054
+"Scallops","wild caught","frozen","home","cooling",1.04855636417017,0.0463078245761213
+"Scallops","wild caught","frozen","home","indirect",1.04855636417017,0.0463078245761213
+"Scallops","wild caught","frozen","home","cooking",1.04855636417017,0.0463078245761213
+"Scallops","wild caught","frozen","home","direct",1.04855636417017,0.0463078245761213
+"Scallops","wild caught","frozen","retail.foodservice","cooling",1.12425727370715,0.067334151450371
+"Scallops","wild caught","frozen","retail.foodservice","indirect.cool",1.12425727370715,0.067334151450371
+"Scallops","wild caught","frozen","retail.foodservice","cooking",1.12425727370715,0.067334151450371
+"Scallops","wild caught","frozen","retail.foodservice","indirect.cook",1.12425727370715,0.067334151450371
+"Scallops","wild caught","frozen","transport","domestic",1.12425727370715,0
+"Scallops","wild caught","frozen","wholesale","cooling",1.13822994714148,0.0122757914333826
+"Scallops","wild caught","frozen","wholesale","direct",1.13822994714148,0.0122757914333826
+"Scallops","wild caught","frozen","transport","intnl",1.13822994714148,0
+"Scallops","wild caught","frozen","processing","direct",1.26892970695818,0.103
+"Scallops","wild caught","frozen","processing","indirect",1.26892970695818,0.103
+"Scallops","wild caught","frozen","production","feed",1.34136332659427,0.054
+"Scallops","wild caught","frozen","production","direct",1.34136332659427,0.054
+"Scallops","wild caught","frozen","production","indirect",1.34136332659427,0.054
+"Other","farmed","mixed","home","cooling",1.04855636417017,0.0463078245761213
+"Other","farmed","mixed","home","indirect",1.04855636417017,0.0463078245761213
+"Other","farmed","mixed","home","cooking",1.04855636417017,0.0463078245761213
+"Other","farmed","mixed","home","direct",1.04855636417017,0.0463078245761213
+"Other","farmed","mixed","retail.foodservice","cooling",1.13891862856545,0.0793404042474057
+"Other","farmed","mixed","retail.foodservice","indirect.cool",1.13891862856545,0.0793404042474057
+"Other","farmed","mixed","retail.foodservice","cooking",1.13891862856545,0.0793404042474057
+"Other","farmed","mixed","retail.foodservice","indirect.cook",1.13891862856545,0.0793404042474057
+"Other","farmed","mixed","transport","domestic",1.13891862856545,0
+"Other","farmed","mixed","wholesale","cooling",1.15307351858698,0.0122757914333826
+"Other","farmed","mixed","wholesale","direct",1.15307351858698,0.0122757914333826
+"Other","farmed","mixed","transport","intnl",1.15307351858698,0
+"Other","farmed","mixed","processing","direct",1.15434329621282,0.0011
+"Other","farmed","mixed","processing","indirect",1.15434329621282,0.0011
+"Other","farmed","mixed","production","feed",1.24753409295668,0.0747
+"Other","farmed","mixed","production","direct",1.24753409295668,0.0747
+"Other","farmed","mixed","production","indirect",1.24753409295668,0.0747
+"Other","wild caught","mixed","home","cooling",1.04855636417017,0.0463078245761213
+"Other","wild caught","mixed","home","indirect",1.04855636417017,0.0463078245761213
+"Other","wild caught","mixed","home","cooking",1.04855636417017,0.0463078245761213
+"Other","wild caught","mixed","home","direct",1.04855636417017,0.0463078245761213
+"Other","wild caught","mixed","retail.foodservice","cooling",1.13891862856545,0.0793404042474057
+"Other","wild caught","mixed","retail.foodservice","indirect.cool",1.13891862856545,0.0793404042474057
+"Other","wild caught","mixed","retail.foodservice","cooking",1.13891862856545,0.0793404042474057
+"Other","wild caught","mixed","retail.foodservice","indirect.cook",1.13891862856545,0.0793404042474057
+"Other","wild caught","mixed","transport","domestic",1.13891862856545,0
+"Other","wild caught","mixed","wholesale","cooling",1.15307351858698,0.0122757914333826
+"Other","wild caught","mixed","wholesale","direct",1.15307351858698,0.0122757914333826
+"Other","wild caught","mixed","transport","intnl",1.15307351858698,0
+"Other","wild caught","mixed","processing","direct",1.15550006873132,0.0021
+"Other","wild caught","mixed","processing","indirect",1.15550006873132,0.0021
+"Other","wild caught","mixed","production","feed",1.22145884643903,0.054
+"Other","wild caught","mixed","production","direct",1.22145884643903,0.054
+"Other","wild caught","mixed","production","indirect",1.22145884643903,0.054

@@ -1,0 +1,1128 @@
+---
+title: "aquatic_food_lca_script"
+output: html_document
+date: "2024-08-14"
+---
+
+#load packages
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+#load datasets
+```{r df}
+#load Dataset 1 - life cycle impact rates
+url <- "https://raw.githubusercontent.com/dave-love/aquatic_food_lca/main/data/Dataset1.csv"
+df <- read.csv(url)
+
+#load Dataset 2 - loss multiplier
+url <- "https://raw.githubusercontent.com/dave-love/aquatic_food_lca/main/data/Dataset2.csv"
+loss <- read.csv(url)
+
+#load Dataset 3 - weighting factors
+url <- "https://raw.githubusercontent.com/dave-love/aquatic_food_lca/main/data/Dataset3.csv"
+weighting_factors <- read.csv(url)
+
+#join loss to the df 
+df <- df %>% left_join(loss)
+
+#join weighting_factors to the df
+df <- df  %>% left_join(weighting_factors)
+```
+
+#Plots
+```{r Figure 1, echo=FALSE}
+
+library(dplyr)
+library(forcats)
+library(ggplot2)
+library(patchwork)
+
+# Calculate total impacts by species/prodmeth/form
+fig1 <- df %>% 
+  group_by(speciesgroup, prodmeth, form, units) %>%
+  summarize(value = sum(value * loss_multiplier, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(
+    concat = factor(paste(speciesgroup, form)),
+    prodmeth = fct_recode(fct_relevel(prodmeth, "wild caught", "farmed"),
+                          "Capture Fisheries" = "wild caught", 
+                          "Aquaculture" = "farmed"),
+    units = fct_relevel(recode(units, 
+                               "energy" = "Energy (MJ/kg)", 
+                               "ghg" = "GHGe (kg CO2 eq/kg)", 
+                               "water" = "Blue water (l/kg)"),
+                        "Energy (MJ/kg)", "GHGe (kg CO2 eq/kg)", "Blue water (l/kg)")
+  )
+
+# Split dataset for each plot
+fig1_energy <- fig1 %>% filter(units == "Energy (MJ/kg)") %>%
+  mutate(concat = fct_reorder(concat, value, .desc = TRUE))
+
+fig1_ghg <- fig1 %>% filter(units == "GHGe (kg CO2 eq/kg)") %>%
+  mutate(concat = fct_reorder(concat, value, .desc = TRUE))
+
+fig1_water <- fig1 %>% filter(units == "Blue water (l/kg)") %>%
+  mutate(concat = fct_reorder(concat, value, .desc = TRUE))
+
+# Calculate weighted means by production method
+fig1_means <- df %>%
+  mutate(value = value * loss_multiplier * prodmeth_weights) %>%
+  group_by(prodmeth, units) %>%
+  summarize(value = sum(value, na.rm = TRUE)) %>%
+  mutate(
+    prodmeth = fct_recode(factor(prodmeth),
+                          "Capture Fisheries" = "wild caught", 
+                          "Aquaculture" = "farmed"),
+    units = recode(factor(units), 
+                   "energy" = "Energy (MJ/kg)", 
+                   "ghg" = "GHGe (kg CO2 eq/kg)", 
+                   "water" = "Blue water (l/kg)")
+  )
+
+# Plot annotation (manually enter the mean values as text)
+hline_wild <- fig1_means %>% filter(prodmeth == "Capture Fisheries") %>%
+  mutate(intercept = c(155, 13, 180), 
+         text = c("Capture Fisheries avg\n (128.4 MJ/kg)", 
+                  "Capture Fisheries avg\n (10.9 kg CO2eq/kg)", 
+                  "Capture\n Fisheries\n avg\n (31.8 l/kg)"),
+         concat = c("Pollock frozen", "Pollock frozen", "Sockeye salmon canned"))
+
+hline_farmed <- fig1_means %>% filter(prodmeth == "Aquaculture") %>%
+  mutate(intercept = c(100, 18.5, 430), 
+         text = c("Aquaculture avg\n (122.6 MJ/kg)", 
+                  "Aquaculture avg\n (16.6 kg CO2eq/kg)", 
+                  "Aquaculture avg\n (281.0 l/kg)"),
+         concat = c("Tuna canned", "Tuna canned", "Crab canned"))
+
+# Split dataset for each plot annotation
+hline_wild_energy <- hline_wild %>% filter(units == "Energy (MJ/kg)")
+hline_farmed_energy <- hline_farmed %>% filter(units == "Energy (MJ/kg)")
+
+hline_wild_ghg <- hline_wild %>% filter(units == "GHGe (kg CO2 eq/kg)")
+hline_farmed_ghg <- hline_farmed %>% filter(units == "GHGe (kg CO2 eq/kg)")
+
+hline_wild_water <- hline_wild %>% filter(units == "Blue water (l/kg)")
+hline_farmed_water <- hline_farmed %>% filter(units == "Blue water (l/kg)")
+
+# Function to generate plots
+generate_plot <- function(data, hline_wild, hline_farmed, ylabel) {
+  ggplot(data, aes(y = value, x = concat, fill = prodmeth)) +
+    geom_hline(data = hline_wild, aes(yintercept = value), color = "#66C2A5", linetype = "dashed") +
+    geom_hline(data = hline_farmed, aes(yintercept = value), color = "#FC8D62", linetype = "dashed") +
+    geom_text(data = hline_wild, aes(y = intercept, x = concat, label = text), color = "#66C2A5", size = 2.5) +
+    geom_text(data = hline_farmed, aes(y = intercept, x = concat, label = text), color = "#FC8D62", size = 2.5) +
+    geom_col(position = position_dodge2(width = .9, preserve = "single")) +
+    geom_text(data = data, aes(y = value, x = concat, label = sprintf("%.1f", value)), 
+              position = position_dodge2(width = .9, preserve = "single"), size = 2.5, hjust = -0.1) +
+    scale_fill_brewer(palette = "Set2", na.value = "white") +
+    labs(fill = "Production method", y = ylabel) +
+    theme(
+      axis.title.y = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      legend.position = "none",
+      legend.direction = "horizontal",
+      panel.background = element_blank(),
+      panel.border = element_rect(colour = "grey", fill = NA),
+      strip.background = element_blank()
+    ) +
+    coord_flip()
+}
+
+# Generate individual plots
+p_energy <- generate_plot(fig1_energy, hline_wild_energy, hline_farmed_energy, "Energy (MJ/kg)")
+p_ghg <- generate_plot(fig1_ghg, hline_wild_ghg, hline_farmed_ghg, "GHGe (kg CO2 eq/kg)")
+p_water <- generate_plot(fig1_water, hline_wild_water, hline_farmed_water, "Blue water (l/kg)")
+
+# Combine plots with patchwork
+p <- (p_energy / p_ghg / p_water) + plot_annotation(tag_levels = 'a') + 
+  theme(legend.position = "bottom")
+
+# Save the combined plot
+#ggsave("~/fig1.jpg", plot = p, device = "jpg", height = 12, width = 8)
+
+# Clean up environment
+rm(list = ls()[!(ls() %in% c("df"))])  # Keeps only the original df in the environment
+
+
+```
+
+```{r Figure 2, echo=FALSE}
+library(dplyr)
+library(ggplot2)
+library(forcats)
+library(patchwork)
+library(scales)
+library(stringr)
+
+# Total impacts by stage of the supply chain
+fig2 <- df %>%
+  mutate(value = value * loss_multiplier * supply_weights) %>%
+  group_by(stage, units) %>%
+  summarize(value = sum(value, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(
+    units = fct_relevel(recode(units, 
+                               "energy" = "Energy (MJ/kg)", 
+                               "ghg" = "GHGe (kg CO2 eq/kg)", 
+                               "water" = "Blue water (l/kg)"),
+                        "Energy (MJ/kg)", "GHGe (kg CO2 eq/kg)", "Blue water (l/kg)"),
+    stage = fct_relevel(as.factor(stage), 
+                        "production", "processing", "transport", 
+                        "wholesale", "retail.foodservice", "home")
+  )
+
+# Calculate the share of total
+freq <- fig2 %>%
+  group_by(units) %>%
+  mutate(freq = value / sum(value)) %>%
+  ungroup()
+
+# Share of total impacts by stage of the supply chain
+fig2b <- df %>%
+  mutate(value = value * loss_multiplier * supply_weights) %>%
+  group_by(stage, step, units) %>%
+  summarize(value = sum(value, na.rm = TRUE)) %>%
+  ungroup() %>%
+  group_by(stage, units) %>%
+  mutate(freq = value / sum(value)) %>%
+  ungroup() %>%
+  mutate(
+    step = recode(step, "indirect.cook" = "cook", "indirect.cool" = "cool"),
+    units = fct_relevel(recode(units, 
+                               "energy" = "Energy (MJ/kg)", 
+                               "ghg" = "GHGe (kg CO2 eq/kg)", 
+                               "water" = "Blue water (l/kg)"),
+                        "Energy (MJ/kg)", "GHGe (kg CO2 eq/kg)", "Blue water (l/kg)"),
+    stage = fct_relevel(as.factor(stage), 
+                        "production", "processing", "transport", 
+                        "wholesale", "retail.foodservice", "home")
+  )
+
+# Keep values over 10% for text labels
+freq_crop <- fig2b %>%
+  filter(freq > 0.1) %>%
+  mutate(
+    freq = scales::percent(freq, accuracy = 1),
+    value_label = str_c(step, freq, sep = "\n")
+  ) %>%
+  select(stage, step, units, value_label)
+
+# Join labels back to fig2b
+fig2b <- fig2b %>%
+  left_join(freq_crop, by = c("stage", "step", "units"))
+
+# Stacked bar plot
+p <- ggplot(fig2, aes(x = stage, y = value, group = units, fill = units)) + 
+  geom_bar(position = "stack", stat = "identity", colour = "white") +
+  geom_text(data = freq, aes(label = scales::percent(freq, accuracy = 1), 
+                             y = value, group = units), 
+            size = 3, color = "black", vjust = -0.5, nudge_y = 0.2) +
+  scale_fill_brewer(palette = "Dark2", na.value = "white") +
+  labs(x = 'Supply chain stage', y = 'Amount') + 
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+    axis.line = element_line(colour = "grey"),
+    panel.grid.major = element_line(colour = "ghostwhite"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    panel.border = element_rect(colour = "grey", fill = NA),
+    strip.background = element_blank()
+  ) +
+  facet_wrap(~units, scales = "free_y", nrow = 3)
+
+# Share of total stacked bar plot
+p2 <- ggplot(fig2b, aes(x = stage, y = freq, group = units, fill = units)) + 
+  geom_bar(position = "fill", stat = "identity", colour = "white") +
+  geom_text(aes(label = value_label), size = 2.5, color = "white", 
+            position = position_stack(vjust = 0.5)) +
+  scale_fill_brewer(palette = "Dark2", na.value = "white") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(x = 'Supply chain stage', y = 'Share of total') + 
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+    axis.line = element_line(colour = "grey"),
+    panel.grid.major = element_line(colour = "ghostwhite"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    panel.border = element_rect(colour = "grey", fill = NA),
+    strip.background = element_blank()
+  ) +
+  facet_wrap(~units, scales = "free_y", nrow = 3)
+
+# Combine plots with patchwork
+p3 <- p + p2 + plot_annotation(tag_levels = 'a') + plot_layout(guides = "collect")
+
+# Save plot
+#ggsave("~/fig2.jpg", plot = p3, device = "jpg", height = 8, width = 8)
+
+# Clean up environment
+rm(list = ls()[!(ls() %in% c("df"))])  # Keeps only the original df in the environment
+
+
+```
+
+```{r Figure 3, echo=FALSE}
+library(dplyr)
+library(ggplot2)
+library(forcats)
+library(patchwork)
+library(scales)
+
+# Total impacts by species/prodmeth/form/stage for salmon
+fig3 <- df %>% 
+  mutate(
+    value = value * loss_multiplier,
+    concat = paste(speciesgroup, prodmeth, form),
+    units = recode_factor(units, 
+                          "energy" = "Energy (MJ/kg)", 
+                          "ghg" = "GHGe (kg CO2 eq/kg)", 
+                          "water" = "Blue water (l/kg)"),
+    stage = fct_relevel(stage, "production", "processing", "transport", 
+                        "wholesale", "retail.foodservice", "home")
+  ) %>% 
+  group_by(concat, stage, units) %>%
+  summarize(value = sum(value, na.rm = TRUE)) %>%
+  ungroup() %>%
+  arrange(-value)
+
+# Filter out salmon
+target_salmon <- c("Atlantic salmon farmed fresh", "Atlantic salmon farmed frozen", 
+                   "Sockeye salmon wild caught fresh", "Sockeye salmon wild caught frozen", 
+                   "Sockeye salmon wild caught canned")
+salmon <- fig3 %>% filter(concat %in% target_salmon)
+
+# Calculate share of total by stage
+salmon <- salmon %>%
+  group_by(concat, units) %>%
+  mutate(freq = value / sum(value)) %>%
+  ungroup()
+
+# Label values with > 10% share of total
+text <- salmon %>% filter(freq > 0.1)
+
+# Stacked bar plot for salmon
+p_salmon <- ggplot(salmon, aes(x = concat, y = value, fill = stage)) + 
+  geom_bar(position = "stack", stat = "identity", colour = "white") +
+  scale_fill_brewer(palette = "Set2", na.value = "white") +
+  ylab('Amount') + 
+  theme(
+    legend.position = "bottom",
+    axis.title.y = element_blank(),
+    axis.line = element_line(colour = "grey"),
+    panel.grid.major = element_line(colour = "ghostwhite"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    panel.border = element_rect(colour = "grey", fill = NA),
+    strip.background = element_blank(),
+    strip.text.x = element_text(hjust = -0.01)
+  ) +
+  facet_wrap(~units, scales = "free_x", nrow = 3) +
+  coord_flip()
+
+# Share of total plot for salmon
+p_salmon2 <- ggplot(salmon, aes(x = concat, y = freq, fill = stage)) + 
+  geom_bar(position = "stack", stat = "identity", colour = "white") +
+  geom_text(aes(label = scales::percent(freq, accuracy = 1)), 
+            size = 2.5, color = "white", position = position_stack(vjust = 0.5)) +
+  scale_fill_brewer(palette = "Set2", na.value = "white") +
+  scale_y_continuous(labels = percent_format()) +
+  ylab('Share of total') + 
+  theme(
+    legend.position = "bottom",
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.line = element_line(colour = "grey"),
+    panel.grid.major = element_line(colour = "ghostwhite"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    panel.border = element_rect(colour = "grey", fill = NA),
+    strip.background = element_blank(),
+    strip.text.x = element_text(hjust = -0.01)
+  ) +
+  facet_wrap(~units, scales = "free_x", nrow = 3) +
+  coord_flip()
+
+# Combine plots with patchwork
+p3 <- p_salmon + p_salmon2 + 
+  plot_annotation(tag_levels = 'a') + 
+  plot_layout(guides = "collect") & 
+  theme(legend.position = "bottom")
+
+# Save the combined plot
+#ggsave("~/fig3.jpg", plot = p3, device = "jpg", height = 9, width = 10)
+
+# Clean up environment
+rm(list = ls()[!(ls() %in% c("df"))])  # Keeps only the original df in the environment
+
+
+```
+
+```{r Figure 4, echo=FALSE}
+library(dplyr)
+library(ggplot2)
+library(forcats)
+library(patchwork)
+library(scales)
+
+# Function to calculate weighted means
+calculate_weighted_means <- function(df, adjust_for_loss = FALSE) {
+  if (adjust_for_loss) {
+    df <- df %>% mutate(value = value * loss_multiplier * supply_weights)
+  } else {
+    df <- df %>% mutate(value = value * supply_weights)
+  }
+  df %>%
+    group_by(units) %>%
+    summarize(value = sum(value, na.rm = TRUE)) %>%
+    mutate(loss = ifelse(adjust_for_loss, "loss adjusted", "not loss adjusted"))
+}
+
+# Calculate weighted means for US supply WITH and WITHOUT LOSS
+fig4_noloss <- calculate_weighted_means(df, adjust_for_loss = FALSE)
+fig4_loss <- calculate_weighted_means(df, adjust_for_loss = TRUE)
+
+# Combine data frames
+fig4 <- bind_rows(fig4_noloss, fig4_loss) %>%
+  mutate(
+    units = recode(units, 
+                   "energy" = "Energy (MJ/kg)", 
+                   "ghg" = "GHGe (kg CO2 eq/kg)", 
+                   "water" = "Blue water (l/kg)"),
+    loss = fct_relevel(loss, "not loss adjusted", "loss adjusted"),
+    units = fct_relevel(units, "Energy (MJ/kg)", "GHGe (kg CO2 eq/kg)", "Blue water (l/kg)")
+  )
+
+# Plot a)
+p1 <- ggplot(fig4, aes(y = value, x = loss, fill = units)) +
+  geom_col() +
+  geom_text(aes(label = sprintf("%.1f", value)), 
+            position = position_dodge2(width = .9, preserve = "single"), 
+            size = 3, vjust = 2, color = "white") +
+  scale_fill_brewer(palette = "Dark2", na.value = "white") +
+  theme(
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    legend.position = "none",
+    panel.background = element_blank(),
+    panel.border = element_rect(colour = "grey", fill = NA),
+    strip.background = element_blank()
+  ) +
+  facet_wrap(~units, scales = "free_y", nrow = 1)
+
+# Function to calculate weighted means by stage
+calculate_weighted_means_by_stage <- function(df, adjust_for_loss = FALSE) {
+  df <- df %>% mutate(value = ifelse(adjust_for_loss, value * loss_multiplier * supply_weights, value * supply_weights))
+  df %>%
+    group_by(units, stage) %>%
+    summarize(value = sum(value, na.rm = TRUE)) %>%
+    ungroup()
+}
+
+# Calculate weighted means for US supply WITH and WITHOUT LOSS by stage
+fig4_noloss_stage <- calculate_weighted_means_by_stage(df, adjust_for_loss = FALSE) %>%
+  rename(no_loss = value)
+fig4_loss_stage <- calculate_weighted_means_by_stage(df, adjust_for_loss = TRUE) %>%
+  rename(loss = value)
+
+# Combine data frames by stage
+fig4_stage <- left_join(fig4_noloss_stage, fig4_loss_stage) %>%
+  mutate(
+    freq = (loss - no_loss) / no_loss,
+    units = recode(units, 
+                   "energy" = "Energy (MJ/kg)", 
+                   "ghg" = "GHGe (kg CO2 eq/kg)", 
+                   "water" = "Blue water (l/kg)"),
+    stage = fct_relevel(as.factor(stage), 
+                        "production", "processing", "transport", 
+                        "wholesale", "retail.foodservice", "home"),
+    units = fct_relevel(units, "Energy (MJ/kg)", "GHGe (kg CO2 eq/kg)", "Blue water (l/kg)")
+  )
+
+# Lollipop plot by stage
+p2 <- ggplot(fig4_stage, aes(x = stage, y = freq, group = units)) +
+  geom_segment(aes(xend = stage, yend = 0, color = units)) +
+  geom_point(aes(color = units), size = 2, alpha = 0.6) +
+  scale_color_brewer(palette = "Dark2") +
+  scale_y_continuous(labels = percent_format()) +
+  coord_flip() +
+  ylab('Percent increase after adjusting for loss') +
+  theme(
+    axis.text.x = element_text(size = 7),
+    axis.title.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    legend.position = "none",
+    panel.background = element_blank(),
+    panel.border = element_rect(colour = "grey", fill = NA),
+    strip.background = element_blank()
+  ) +
+  facet_wrap(~units, ncol = 3)
+
+# Function to calculate weighted means by species group
+calculate_weighted_means_by_species <- function(df, adjust_for_loss = FALSE) {
+  df <- df %>% mutate(value = ifelse(adjust_for_loss, value * loss_multiplier, value))
+  df %>%
+    mutate(concat = paste(speciesgroup, prodmeth, form, sep = " ")) %>%
+    group_by(concat, units) %>%
+    summarize(value = sum(value, na.rm = TRUE)) %>%
+    ungroup()
+}
+
+# Calculate weighted means for US supply WITH and WITHOUT LOSS by species group
+fig4_noloss_species <- calculate_weighted_means_by_species(df, adjust_for_loss = FALSE) %>%
+  rename(no_loss = value)
+fig4_loss_species <- calculate_weighted_means_by_species(df, adjust_for_loss = TRUE) %>%
+  rename(loss = value)
+
+# Combine data frames by species group
+fig4_species <- left_join(fig4_noloss_species, fig4_loss_species) %>%
+  mutate(
+    freq = (loss - no_loss) / no_loss,
+    units = recode(units, 
+                   "energy" = "Energy (MJ/kg)", 
+                   "ghg" = "GHGe (kg CO2 eq/kg)", 
+                   "water" = "Blue water (l/kg)"),
+    units = fct_relevel(units, "Energy (MJ/kg)", "GHGe (kg CO2 eq/kg)", "Blue water (l/kg)"),
+    concat = fct_reorder2(as.factor(concat), units, freq)
+  )
+
+# Lollipop plot by species group
+p3 <- ggplot(fig4_species, aes(x = concat, y = freq, group = units)) +
+  geom_segment(aes(xend = concat, yend = 0, color = units)) +
+  geom_point(aes(color = units), size = 2, alpha = 0.6) +
+  scale_color_brewer(palette = "Dark2") +
+  scale_y_continuous(labels = percent_format()) +
+  coord_flip() +
+  ylab('Percent increase after adjusting for loss') +
+  theme(
+    axis.text.x = element_text(size = 7),
+    axis.title.y = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    legend.position = "none",
+    panel.background = element_blank(),
+    panel.border = element_rect(colour = "grey", fill = NA),
+    strip.background = element_blank()
+  ) +
+  facet_wrap(~units, ncol = 3)
+
+# Combine plots with patchwork
+p4 <- (p1 / p2 / p3) + plot_annotation(tag_levels = 'a') +
+  plot_layout(heights = c(1.5, 1, 4))
+
+# Save plot
+#ggsave("~/fig4.jpg", plot = p4, device = "jpg", height = 9, width = 7)
+
+# Clean up environment
+rm(list = ls()[!(ls() %in% c("df"))])  # Keeps only the original df in the environment
+
+```
+
+```{r Figure 5, echo=FALSE}
+
+library(dplyr)
+library(ggplot2)
+library(forcats)
+library(scales)
+library(patchwork)
+
+# Function to process data by form and calculate frequencies
+process_data_by_form <- function(df, include_supply = FALSE) {
+  processed_data <- df %>%
+    mutate(value = value * loss_multiplier * ifelse(include_supply, form_weights, supply_weights)) %>%
+    group_by(form, units) %>%
+    summarize(value = sum(value, na.rm = TRUE)) %>%
+    group_by(units) %>%
+    mutate(freq = value / sum(value)) %>%
+    ungroup()
+
+  if (include_supply) {
+    supply <- df %>%
+      select(form, share_form) %>%
+      distinct() %>%
+      rename(freq = share_form) %>%
+      mutate(units = "Supply")
+    
+    processed_data <- bind_rows(processed_data, supply)
+  }
+
+  processed_data %>%
+    mutate(
+      units = recode(units, 
+                     "energy" = "Energy (MJ/kg)", 
+                     "ghg" = "GHGe (kg CO2 eq/kg)", 
+                     "water" = "Blue water (l/kg)"),
+      form = recode(form, 
+                    "canned" = "Canned", 
+                    "frozen" = "Frozen", 
+                    "fresh" = "Fresh",
+                    "mixed" = "Mixed"),
+      units = fct_relevel(units, "Supply", "Energy (MJ/kg)", "GHGe (kg CO2 eq/kg)", "Blue water (l/kg)"),
+      form = fct_relevel(form, "Fresh", "Frozen", "Canned")
+    ) %>%
+    filter(units != "Supply", form != "Mixed")
+}
+
+# Process data for different plots
+fig5a <- process_data_by_form(df, include_supply = TRUE)
+
+# Calculate share of total impacts by stage of the supply chain
+fig5b <- df %>%
+  mutate(value = value * loss_multiplier * supply_weights) %>%
+  group_by(form, stage, units) %>%
+  summarize(value = sum(value, na.rm = TRUE)) %>%
+  group_by(form, units) %>%
+  mutate(freq = value / sum(value)) %>%
+  ungroup() %>%
+  filter(freq > 0.15) %>%
+  mutate(
+    value_label = paste0(stage, "\n", scales::percent(freq, accuracy = 1)),
+    units = recode(units, 
+                   "energy" = "Energy (MJ/kg)", 
+                   "ghg" = "GHGe (kg CO2 eq/kg)", 
+                   "water" = "Blue water (l/kg)"),
+    form = recode(form, 
+                  "canned" = "Canned", 
+                  "frozen" = "Frozen", 
+                  "fresh" = "Fresh",
+                  "mixed" = "Mixed"),
+    units = fct_relevel(units, "Supply", "Energy (MJ/kg)", "GHGe (kg CO2 eq/kg)", "Blue water (l/kg)"),
+    form = fct_relevel(form, "Fresh", "Frozen", "Canned")
+  ) %>%
+  filter(units != "Supply", form != "Mixed")
+
+# Calculate share of total impacts by species
+fig5c <- df %>%
+  mutate(value = value * loss_multiplier * supply_weights) %>%
+  group_by(form, speciesgroup, prodmeth, units) %>%
+  summarize(value = sum(value, na.rm = TRUE)) %>%
+  group_by(form, units) %>%
+  mutate(freq = value / sum(value)) %>%
+  ungroup() %>%
+  filter(freq > 0.10) %>%
+  mutate(
+    value_label = paste0(speciesgroup, "\n", scales::percent(freq, accuracy = 1)),
+    units = recode(units, 
+                   "energy" = "Energy (MJ/kg)", 
+                   "ghg" = "GHGe (kg CO2 eq/kg)", 
+                   "water" = "Blue water (l/kg)"),
+    form = recode(form, 
+                  "canned" = "Canned", 
+                  "frozen" = "Frozen", 
+                  "fresh" = "Fresh",
+                  "mixed" = "Mixed"),
+    units = fct_relevel(units, "Supply", "Energy (MJ/kg)", "GHGe (kg CO2 eq/kg)", "Blue water (l/kg)"),
+    form = fct_relevel(form, "Fresh", "Frozen", "Canned"),
+    speciesgroup = fct_reorder2(as.factor(speciesgroup), form, -freq)
+  ) %>%
+  filter(units != "Supply", form != "Mixed")
+
+# Plot total by form
+p1 <- ggplot(fig5a, aes(x = form, y = value, fill = units)) + 
+  geom_bar(position = "stack", stat = "identity", colour = "white") +
+  geom_text(aes(label = sprintf("%.1f", value)), 
+            position = position_dodge2(width = .9, preserve = "single"), 
+            size = 2.5, vjust = 2, colour = "white") +
+  scale_fill_brewer(palette = "Dark2", na.value = "white") +
+  xlab("Form") +
+  ylab('Amount') + 
+  theme(
+    legend.position = "none",
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.line = element_line(colour = "grey"),
+    panel.grid.major = element_line(colour = "ghostwhite"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    panel.border = element_rect(colour = "grey", fill = NA),
+    strip.background = element_blank(),
+    strip.text.x = element_text(hjust = -0.01)
+  ) +
+  facet_wrap(~units, nrow = 3, scales = "free_y")
+
+# Plot share of total by stage of the supply chain
+p2 <- ggplot(fig5b, aes(x = form, y = freq, fill = stage)) + 
+  geom_bar(position = "fill", stat = "identity", colour = "white") +
+  geom_text(aes(label = value_label), size = 2.5, color = "white", 
+            position = position_stack(vjust = 0.5)) +
+  scale_fill_brewer(palette = "Set2", na.value = "white") +
+  scale_y_continuous(labels = percent_format(), limits = c(0, 1)) +
+  labs(x = 'Form', y = 'Share of total') + 
+  theme(
+    legend.position = "bottom",
+    axis.line = element_line(colour = "grey"),
+    panel.grid.major = element_line(colour = "ghostwhite"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    panel.border = element_rect(colour = "grey", fill = NA),
+    strip.background = element_blank(),
+    strip.text.x = element_text(hjust = -0.01)
+  ) +
+  facet_wrap(~units, scales = "free_y", nrow = 3)
+
+# Plot share of total by species
+p3 <- ggplot(fig5c, aes(x = form, y = freq, fill = speciesgroup)) + 
+  geom_bar(position = "fill", stat = "identity", colour = "white") +
+  geom_text(aes(label = value_label), size = 2.5, color = "black", 
+            position = position_stack(vjust = 0.5)) +
+  scale_fill_brewer(palette = "Set3", na.value = "white") +
+  scale_y_continuous(labels = percent_format(), limits = c(0, 1)) +
+  labs(x = 'Form', y = 'Share of total') + 
+  theme(
+    legend.position = "none",
+    axis.line = element_line(colour = "grey"),
+    panel.grid.major = element_line(colour = "ghostwhite"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    panel.border = element_rect(colour = "grey", fill = NA),
+    strip.background = element_blank(),
+    strip.text.x = element_text(hjust = -0.01)
+  ) +
+  facet_wrap(~units, scales = "free_y", nrow = 3)
+
+# Combine plots
+p4 <- (p1 + p3) + plot_annotation(tag_levels = 'a')
+plot(p4)
+
+# Save plot
+#ggsave("~/fig5.jpg", plot = p4, device = "jpg", height = 8, width = 8)
+
+# Clean up environment
+rm(list = ls()[!(ls() %in% c("df"))])  # Keeps only the original df in the environment
+
+```
+
+#Supplement
+```{r Figure S2, echo=FALSE}
+library(dplyr)
+library(readxl)
+library(httr)
+library(ggplot2)
+library(forcats)
+library(tidyr)
+library(patchwork)
+
+# Load and process study data (WITHOUT LOSS MULTIPLIER)
+figS2 <- df %>%
+  filter(stage == "production") %>%
+  group_by(speciesgroup, prodmeth, form, units) %>%
+  summarize(value = sum(value, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(
+    concat = as.factor(paste(speciesgroup, form)),
+    prodmeth = fct_relevel(prodmeth, "wild caught", "farmed"),
+    prodmeth = fct_recode(prodmeth, 
+                          "Capture Fisheries" = "wild caught", 
+                          "Aquaculture" = "farmed"),
+    dataset = "Our study"
+  ) %>%
+  pivot_wider(names_from = "units", values_from = "value") %>%
+  select(speciesgroup, prodmeth, energy, ghg, dataset)
+
+# Load and process Heller 2018 data
+url <- "https://raw.githubusercontent.com/dave-love/aquatic_food_lca/main/data/datafield.csv"
+datafield <- read.csv(url) %>%
+  filter(FOOD.TYPE %in% c("Meat", "Meat Substitutes", "Eggs", "Fish and Seafood", "Legumes and Nuts")) %>%
+  filter(!SUB.TYPE %in% c("Poultry, other", "Sheep", "Rabbit, meat", "Eggs, Chicken", "Goat", "Meat, game", "Turkey", "Veal", "snail", "Plant-based protein")) %>%
+  mutate(
+    SUB.TYPE = fct_relevel(SUB.TYPE, "Capture Fisheries", "Aquaculture", "Beef", "Pork", "Chicken", "Legumes and Nuts"),
+    energy = as.numeric(farm_gate_energy),
+    ghg = as.numeric(farm_gate_ghg),
+    dataset = "Heller 2018"
+  ) %>%
+   filter(farm_gate_ghg >0) %>%
+  filter(farm_gate_energy >0) %>%
+  select(SUB.TYPE, energy, ghg, dataset) %>%
+  rename(prodmeth = SUB.TYPE)
+
+# Load and process Gephart et al. 2021 data
+url <- "https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-021-03889-2/MediaObjects/41586_2021_3889_MOESM5_ESM.csv"
+gephart <- read.csv(url) %>%
+  filter(stressor == "GHG") %>%
+  filter(allocation == "mass")%>%
+  mutate(
+    prodmeth = case_when(
+    source == "total on- and off-farm" ~ "Aquaculture",
+    source == "all" ~ "Capture Fisheries", 
+    TRUE ~ source),
+    ghg = median / 1000,  # Convert from g CO2 eq to kg CO2 eq
+    dataset = "Gephart 2021") %>%
+    select(ghg, prodmeth, dataset) 
+
+# Combine datasets
+figS2 <- bind_rows(figS2, datafield, gephart) %>%
+  mutate(
+    dataset = fct_relevel(dataset, "Our study", "Heller 2018", "Gephart 2021"),
+    prodmeth = fct_relevel(prodmeth, "Capture Fisheries", "Aquaculture", "Beef", "Pork", "Chicken", "Legumes and Nuts")
+  )
+
+# Calculate medians
+median <- figS2 %>% group_by(prodmeth, dataset) %>%
+  summarize(median_ghg = median(ghg), 
+            median_energy = median(energy))
+
+figS2_love <- figS2 %>% filter(dataset == "Our study") 
+median_love <- median %>% filter(dataset == "Our study") 
+
+figS2_heller <- figS2 %>% filter(dataset == "Heller 2018")
+median_heller <- median %>% filter(dataset == "Heller 2018") 
+
+figS2_gephart <- figS2 %>% filter(dataset == "Gephart 2021")
+median_gephart <- median %>% filter(dataset == "Gephart 2021") 
+
+#violinplot energy 
+p1<- ggplot(figS2_love, aes(x=prodmeth, y=energy, fill = prodmeth))+
+     geom_boxplot()+
+  #  geom_jitter(shape = 1, size = 1.5, color = "gray", width = 0.25)+
+   geom_text(data = median_love, aes(x = prodmeth, y = -5, label = round(median_energy, 1), group=dataset), color = "red", size = 3)+ 
+    scale_fill_brewer(palette = "Set2", na.value = "white")+
+      ylab("Energy (MJ/kg)")+
+      ylim(-5,250)+
+    theme(
+    panel.grid.major.y = element_line(color = "gray90"), 
+    panel.grid.minor.y = element_line(color = "gray90"),
+    axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+      panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position="none",
+      legend.direction="horizontal",
+          panel.background = element_blank(),
+          panel.border = element_rect(colour="grey", fill = NA),
+          strip.background =element_blank())+
+    facet_grid(~dataset, scales= "free_x")
+  
+  p2<- ggplot(figS2_heller, aes(x=prodmeth, y=energy, fill = prodmeth))+
+     geom_boxplot()+
+   # geom_jitter(shape = 1, size = 1.5, color = "gray", width = 0.25)+
+    geom_text(data = median_heller, aes(x = prodmeth, y = -5, label = round(median_energy, 1), group=dataset), color = "red", size = 3)+ 
+    scale_fill_brewer(palette = "Set2", na.value = "white")+
+    scale_y_continuous(position = "right", limits = c(-5, 250))+
+          ylab("Energy (MJ/kg)")+
+    theme(
+    panel.grid.major.y = element_line(color = "gray90"), 
+    panel.grid.minor.y = element_line(color = "gray90"),
+  #  axis.text.y = element_blank(),
+   #       axis.title.y = element_blank(),     
+    axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+      panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position="none",
+      legend.direction="horizontal",
+          panel.background = element_blank(),
+          panel.border = element_rect(colour="grey", fill = NA),
+          strip.background =element_blank())+
+    facet_grid(~dataset, scales= "free_x")
+  
+
+#violinplot ghg
+p3<- ggplot(figS2_love, aes(x=prodmeth, y=ghg, fill = prodmeth))+
+     geom_boxplot()+
+   # geom_jitter(shape = 1, size = 1.5, color = "gray", width = 0.25)+
+  geom_text(data = median_love, aes(x = prodmeth, y = -2, label = round(median_ghg, 1), group=dataset), color = "red", size = 3)+ 
+    scale_fill_brewer(palette = "Set2", na.value = "white")+
+      ylab("GHGe (kg CO2 eq/kg)")+
+      ylim(-5,50)+
+    theme(
+    panel.grid.major.y = element_line(color = "gray90"), 
+    panel.grid.minor.y = element_line(color = "gray90"),
+    axis.text.x = element_text(angle = 45,vjust = 1, hjust=1),
+      axis.title.x = element_blank(),
+      panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position="none",
+      legend.direction="horizontal",
+          panel.background = element_blank(),
+          panel.border = element_rect(colour="grey", fill = NA),
+          strip.background =element_blank())+
+    facet_grid(~dataset, scales= "free_x")
+
+p4<- ggplot(figS2_gephart, aes(x=prodmeth, y=ghg, fill = prodmeth))+
+     geom_boxplot()+
+  #  geom_jitter(shape = 1, size = 1.5, color = "gray", width = 0.25)+
+  geom_text(data = median_gephart, aes(x = prodmeth, y = -2, label = round(median_ghg, 1), group=dataset), color = "red", size = 3)+ 
+    scale_fill_brewer(palette = "Set2", na.value = "white")+      ylim(-5,50)+
+    theme(
+       axis.text.y = element_blank(),
+          axis.title.y = element_blank(),  
+    panel.grid.major.y = element_line(color = "gray90"), 
+    panel.grid.minor.y = element_line(color = "gray90"),
+    axis.text.x = element_text(angle = 45,vjust = 1, hjust=1),
+      axis.title.x = element_blank(),
+      panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position="none",
+      legend.direction="horizontal",
+          panel.background = element_blank(),
+          panel.border = element_rect(colour="grey", fill = NA),
+          strip.background =element_blank())+
+    facet_grid(~dataset, scales= "free_x")
+  
+  p5<- ggplot(figS2_heller, aes(x=prodmeth, y=ghg, fill = prodmeth))+
+     geom_boxplot()+
+  #  geom_jitter(shape = 1, size = 1.5, color = "gray", width = 0.25)+
+    geom_text(data = median_heller, aes(x = prodmeth, y = -2, label = round(median_ghg, 1), group=dataset), color = "red", size = 3)+ 
+    scale_fill_brewer(palette = "Set2", na.value = "white")+
+    scale_y_continuous(position = "right", limits = c(-5, 50))+
+          ylab("GHGe (kg CO2 eq/kg)")+
+    theme(
+    panel.grid.major.y = element_line(color = "gray90"), 
+    panel.grid.minor.y = element_line(color = "gray90"),
+   #     axis.text.y = element_blank(),
+    #      axis.title.y = element_blank(),     
+    axis.text.x = element_text(angle = 45,vjust = 1, hjust=1),
+          axis.title.x = element_blank(),
+      panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position="none",
+      legend.direction="horizontal",
+          panel.background = element_blank(),
+          panel.border = element_rect(colour="grey", fill = NA),
+          strip.background =element_blank())+
+    facet_grid(~dataset, scales= "free_x")
+
+# Combine plots
+row1 <- p1 + plot_spacer() + p2 + plot_layout(widths = c(1, 1, 5))
+row2 <- p3 + p4 + p5 + plot_layout(widths = c(1, 1, 5))
+combined_plot <- row1 / row2 + plot_annotation(tag_levels = 'a') + plot_layout(guides = "collect")
+
+# Save plot
+ggsave("~/figS2.jpg", plot = combined_plot, device = "jpg", height = 6, width = 7)
+
+```
+
+```{r Figure S3, echo=FALSE}
+#load our study data
+figS3 <- df %>% 
+    filter(stage == "production")%>%
+  group_by(speciesgroup, prodmeth, form, units) %>%
+  summarize(value = sum(value * loss_multiplier, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(
+    concat = paste(speciesgroup, form),
+    concat = as.factor(concat),
+    prodmeth = fct_relevel(prodmeth, "wild caught", "farmed"),
+    prodmeth = fct_recode(prodmeth, "Capture Fisheries" = "wild caught", "Aquaculture" = "farmed"),
+    dataset = "Our study"
+    ) %>%
+  pivot_wider(names_from = "units", values_from = "value") %>%
+  select(speciesgroup, prodmeth, energy, ghg, dataset)
+
+#load dataFIELD
+url <- "https://raw.githubusercontent.com/dave-love/aquatic_food_lca/main/data/datafield.csv"
+datafield <- read.csv(url) %>% 
+  select(FOOD.TYPE, SUB.TYPE, farm_gate_energy, farm_gate_ghg) %>%
+  filter(FOOD.TYPE == "Fish and Seafood")%>%
+ mutate(dataset = "Heller 2018", 
+        farm_gate_energy = as.numeric(farm_gate_energy),
+        farm_gate_ghg = as.numeric(farm_gate_ghg)) %>%
+  rename(prodmeth = SUB.TYPE) %>%
+  filter(farm_gate_ghg >0) %>%
+  filter(farm_gate_energy >0) %>%
+  filter(farm_gate_ghg < 30) %>%
+  filter(farm_gate_energy < 300) %>%
+  rename(ghg = farm_gate_ghg) %>%
+  rename(energy = farm_gate_energy) %>%
+  distinct()
+
+figS3 <- figS3 %>% bind_rows(datafield) %>%
+     mutate(
+       dataset = as.factor(dataset),
+       dataset = fct_relevel(dataset, "Our study", "Heller 2018"),
+       prodmeth = fct_relevel(prodmeth, "Capture Fisheries", "Aquaculture")
+     )
+                        
+#Fig S3  (x-y plot)
+  p<- ggplot(figS3, aes(x=ghg, y=energy, color = prodmeth))+
+ scale_color_brewer(palette = "Set2", na.value = "white")+
+    xlab("GHGe (kg CO2 eq/kg)")+
+    ylab("Energy (MJ/kg)")+
+  stat_poly_line() +
+  stat_poly_eq(use_label(c("eq", "R2")), position = position_dodge(width = 0.2)) +
+         geom_point()+
+      theme(
+        panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position="bottom",     
+          legend.direction="horizontal",
+         theme(legend.title=element_blank()),
+          panel.background = element_blank(),
+          panel.border = element_rect(colour="grey", fill = NA),
+          strip.background =element_blank())+
+    facet_wrap(~dataset) 
+      plot(p)
+    
+  p1 <- p + guides(fill=guide_legend(title="Production method"))
+
+#ggsave("~/figS3.jpg", plot = p, device = "jpg", height = 4, width = 6)
+
+rm(figS3, datafield, gephart)
+
+```
+
+```{r Figure S4, echo=FALSE}
+made with data provided by Gephart et al. 2021 and feed-specific GHGe from our study
+
+```
+
+```{r Figure S5, echo=FALSE}
+
+#total impacts by species/prodmeth/form/stage 
+figS5 <- df %>% 
+  group_by(speciesgroup, prodmeth, form, stage, units) %>%
+  summarize(value = sum(value * loss_multiplier, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(
+    concat = paste(speciesgroup, prodmeth, form),
+    concat = as.factor(concat),
+    units = as.factor(units),
+    units = recode(units, "energy" = "Energy (MJ/kg)", "ghg" = "GHGe (kg CO2 eq/kg)", "water" = "Blue water (l/kg)"),
+    units = fct_relevel(units, "Energy (MJ/kg)", "GHGe (kg CO2 eq/kg)", "Blue water (l/kg)"),
+    stage = fct_relevel(stage, "production", "processing","transport", "wholesale","retail.foodservice", "home")
+    ) %>%
+  arrange(-value)
+
+
+#calculate share of total by stage
+freq <-figS5 %>% 
+  group_by(concat, stage, units) %>% 
+  summarize(value = sum(value)) %>% 
+  group_by(concat, units) %>% 
+  summarize(freq = value/sum(value), stage, concat) 
+
+#combine dfs
+figS5 <- figS5 %>% left_join(freq) 
+
+
+#stacked bar_salmon
+p <- ggplot(figS5, aes(x=concat, y=value, group = units, fill=stage)) + 
+    geom_bar(position="stack", stat="identity", colour="white")+
+  scale_fill_brewer(palette = "Set2", na.value = "white")+
+  ylab('Amount')+ 
+  theme(legend.position = "bottom",
+        axis.title.y = element_blank(),
+    axis.line = element_line(colour = "grey"),
+    panel.grid.major = element_line(colour = "ghostwhite"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    panel.border = element_rect(colour="grey", fill = NA),
+    strip.background =element_blank())+
+    facet_wrap(~units, scales="free_x", nrow=3)+
+   theme(strip.text.x = element_text(hjust = -0.01))+
+  coord_flip()
+plot(p)
+
+p2 <- ggplot(figS5, aes(x=concat, y=freq, group = units, fill=stage)) + 
+    geom_bar(position="stack", stat="identity", colour="white")+
+   geom_text(aes(label=scales::percent(freq, accuracy=1), x=concat, y=freq, group=units), size=2.5, color="white", position =  position_stack(vjust = 0.5))+
+  scale_fill_brewer(palette = "Set2", na.value = "white")+
+  scale_y_continuous(labels = percent_format())+
+  ylab('Share of total')+ 
+  theme(legend.position = "bottom",
+   axis.text.y = element_blank(),
+   axis.title.y = element_blank(),
+    axis.line = element_line(colour = "grey"),
+    panel.grid.major = element_line(colour = "ghostwhite"),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    panel.border = element_rect(colour="grey", fill = NA),
+    strip.background =element_blank())+
+    facet_wrap(~units, scales="free_x", nrow=3)+
+   theme(strip.text.x = element_text(hjust = -0.01))+
+  coord_flip()
+plot(p2)
+
+p3 <- p + p2  + plot_annotation(tag_levels = 'a') + plot_layout(guides = "collect") & theme(legend.position = "bottom")
+
+plot(p3)
+
+#ggsave("~/figS5.jpg", plot = p3, device = "jpg", height = 20, width = 9)
+
+```
+
+```{r Figure S6, echo=FALSE}
+#load our study data
+figS6 <- df %>% 
+  filter(stage == "production") %>%
+  group_by(speciesgroup, prodmeth, form, units) %>%
+  summarize(value = sum(value * loss_multiplier, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(
+    concat = paste(speciesgroup, form),
+    concat = as.factor(concat),
+    prodmeth = fct_relevel(prodmeth, "wild caught", "farmed"),
+    prodmeth = fct_recode(prodmeth, "Capture Fisheries" = "wild caught", "Aquaculture" = "farmed"),
+    dataset = "Our study"
+    ) %>%
+  pivot_wider(names_from = "units", values_from = "value") %>%
+  select(speciesgroup, prodmeth, water, dataset)
+
+
+
+#load gephart
+ url <- "https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-021-03889-2/MediaObjects/41586_2021_3889_MOESM5_ESM.csv"
+gephart <- read.csv(url) %>%
+  filter(stressor == "Water") %>%
+  filter(allocation == "mass")%>%
+    mutate(
+    prodmeth = case_when(
+    source == "total on- and off-farm" ~ "Aquaculture",
+    source == "all" ~ "Capture Fisheries", 
+    TRUE ~ source)
+    )%>%
+  rename(water = median) %>%
+   mutate(dataset = "Gephart 2021\n (global)")  %>%
+  select(water, prodmeth, dataset)
+
+#load Henricksson and Pahlow
+url <- "https://raw.githubusercontent.com/dave-love/aquatic_food_lca/main/data/Henricksson%20and%20Pahlow.csv"
+hp <- read.csv("~/Dropbox/CLF/Research Projects/INFEWS Supply Chain team/Data analysis/USA Seafood/figures/Henricksson and Pahlow.csv") %>% 
+  select(dataset, SUB.TYPE2, water)%>%
+    mutate(prodmeth = "Aquaculture") %>%
+  mutate(dataset = fct_recode(dataset,  "Pahlow 2015\n (China)" = "Pahlow 2015", "Henriksson 2017\n (Indonesia)" = "Henriksson 2017")
+  )
+  
+#combined datasets   
+figS6 <-figS6 %>% bind_rows(gephart) %>% bind_rows(hp) %>%
+  filter(prodmeth == "Aquaculture") %>%
+    mutate(dataset = fct_relevel(dataset, "Our study", "Pahlow 2015", "Henricksson 2017", "Gephart 2021"))
+  
+median <- figS6 %>% group_by(prodmeth, dataset) %>%
+  summarize(median_water = median(water)) 
+
+  #boxplot water
+  p<- ggplot(figS6, aes(x=dataset, y=log10(water), fill = dataset))+
+     geom_boxplot()+
+    geom_jitter(shape = 1, size = 1.5, color = "black", width = 0.25)+
+    geom_text(data = median, aes(x = dataset, y = 1, label = round(median_water, 1), group=dataset),  color = "red",size = 3)+ 
+    scale_fill_brewer(palette = "Set2", na.value = "white")+
+      ylab("log10 Blue water (l/kg)")+
+    theme(
+      axis.title.x = element_blank(),
+      panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position="none",
+      legend.direction="horizontal",
+          panel.background = element_blank(),
+          panel.border = element_rect(colour="grey", fill = NA),
+          strip.background =element_blank())
+  plot(p) 
+
+  #ggsave("~/figS6.jpg", plot = p, device = "jpg", height = 4, width = 7)
+
+rm(figS6, gephart, hp, median)
+```
+
+```{r Figure S7, echo= FALSE}
+data available upon request. made with https://sankeymatic.com/build/ 
+
+```

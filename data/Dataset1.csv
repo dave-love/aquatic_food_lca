@@ -226,10 +226,10 @@
 "Sockeye salmon","wild caught","fresh","production","indirect","ghg",0.29978741883745
 "Sockeye salmon","wild caught","fresh","processing","direct","energy",7.28945621671359
 "Sockeye salmon","wild caught","fresh","processing","direct","water",9.75393561732123
-"Sockeye salmon","wild caught","fresh","processing","indirect","energy",34.5134024997777
-"Sockeye salmon","wild caught","fresh","processing","indirect","water",22.9550768270497
+"Sockeye salmon","wild caught","fresh","processing","indirect","energy",5.40727440008715
+"Sockeye salmon","wild caught","fresh","processing","indirect","water",3.3408471469229
 "Sockeye salmon","wild caught","fresh","processing","direct","ghg",0.629074014549151
-"Sockeye salmon","wild caught","fresh","processing","indirect","ghg",3.68852402160124
+"Sockeye salmon","wild caught","fresh","processing","indirect","ghg",0.577887431302647
 "Sockeye salmon","wild caught","fresh","transport","intnl","energy",10.2983497358439
 "Sockeye salmon","wild caught","fresh","transport","intnl","water",1.08132672226361
 "Sockeye salmon","wild caught","fresh","transport","intnl","ghg",0.741481180980758
@@ -262,10 +262,10 @@
 "Sockeye salmon","wild caught","frozen","production","indirect","ghg",0.29978741883745
 "Sockeye salmon","wild caught","frozen","processing","direct","energy",7.28945621671359
 "Sockeye salmon","wild caught","frozen","processing","direct","water",9.75393561732123
-"Sockeye salmon","wild caught","frozen","processing","indirect","energy",25.0494096036487
-"Sockeye salmon","wild caught","frozen","processing","indirect","water",9.99047088607873
+"Sockeye salmon","wild caught","frozen","processing","indirect","energy",5.40727440008715
+"Sockeye salmon","wild caught","frozen","processing","indirect","water",3.3408471469229
 "Sockeye salmon","wild caught","frozen","processing","direct","ghg",0.629074014549151
-"Sockeye salmon","wild caught","frozen","processing","indirect","ghg",2.67708606969661
+"Sockeye salmon","wild caught","frozen","processing","indirect","ghg",0.577887431302647
 "Sockeye salmon","wild caught","frozen","transport","intnl","energy",1.31206655409099
 "Sockeye salmon","wild caught","frozen","transport","intnl","water",0.137766988179554
 "Sockeye salmon","wild caught","frozen","transport","intnl","ghg",0.0944687918945512
@@ -910,10 +910,10 @@
 "Other","wild caught","mixed","production","indirect","ghg",0.309256312045978
 "Other","wild caught","mixed","processing","direct","energy",10.2432718709544
 "Other","wild caught","mixed","processing","direct","water",17.5798260005549
-"Other","wild caught","mixed","processing","indirect","energy",9.54933739636354
-"Other","wild caught","mixed","processing","indirect","water",4.95212269633572
+"Other","wild caught","mixed","processing","indirect","energy",6.68179249617224
+"Other","wild caught","mixed","processing","indirect","water",3.40719014226027
 "Other","wild caught","mixed","processing","direct","ghg",0.974767377179648
-"Other","wild caught","mixed","processing","indirect","ghg",1.02055890829914
+"Other","wild caught","mixed","processing","indirect","ghg",0.714098012493697
 "Other","wild caught","mixed","transport","intnl","energy",36.5739118933895
 "Other","wild caught","mixed","transport","intnl","water",3.8402607488059
 "Other","wild caught","mixed","transport","intnl","ghg",2.63332165632404
